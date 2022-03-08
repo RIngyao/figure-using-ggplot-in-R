@@ -19,3 +19,52 @@ ggplot(exp_mc_ir64_all_cs2, aes(x=funcLabel, y = log_fpkm, fill = treatment))+
                     labels= c("Control", "Stress"))+
   stat_compare_means(aes(group = treatment, label = ..p.signif..), method = "t.test", 
                              label.y = c(13.8, 9.3, 13.6, 7.15, 8.45, 9.25), tip.length = 0.01)
+
+
+
+#plot pie-like chart using ggplot2-------------------------------------------------------
+#sample
+b_context <- structure(list(Name = c("CHG", "CHG", "CpG", "CHG", "CpG", "CpG", 
+"CHH", "CpG", "CHG", "CHH", "CpG", "CHH", "CHH", "CHG", "CHH", 
+"CpG", "CHH", "CHH", "CpG", "CpG", "CHG", "CHH", "CHG", "CHH", 
+"CHG", "CHH", "CHH", "CHG", "CpG", "CHH", "CpG", "CpG", "CHG", 
+"CHG", "CHG", "CHH", "CHH", "CpG", "CpG", "CHG"), label = structure(c(2L, 
+11L, 8L, 10L, 5L, 9L, 9L, 11L, 7L, 8L, 4L, 11L, 7L, 7L, 4L, 3L, 
+4L, 3L, 2L, 1L, 8L, 2L, 9L, 6L, 10L, 8L, 10L, 2L, 7L, 3L, 6L, 
+5L, 4L, 4L, 11L, 5L, 9L, 2L, 10L, 8L), .Label = c("Pro(2-3kb)", 
+"Pro(1-2kb)", "Pro(<1kb)", "5' UTR", "Exon", "Intron", "3' UTR", 
+"Do(<1kb)", "Do(1-2kb)", "Do(2-3kb)", "Inter"), class = "factor"), 
+    treatment = c("Control", "Control", "Control", "Stress", 
+    "Control", "Stress", "Stress", "Control", "Control", "Control", 
+    "Control", "Control", "Stress", "Stress", "Control", "Stress", 
+    "Stress", "Stress", "Stress", "Control", "Control", "Control", 
+    "Stress", "Control", "Control", "Stress", "Control", "Stress", 
+    "Stress", "Control", "Control", "Stress", "Stress", "Control", 
+    "Stress", "Stress", "Control", "Control", "Stress", "Stress"
+    ), count = c(18138L, 31338L, 13944L, 18472L, 48650L, 40505L, 
+    16398L, 43925L, 3353L, 13159L, 2800L, 29966L, 9237L, 10372L, 
+    3486L, 189468L, 6998L, 77351L, 131773L, 15678L, 11189L, 20064L, 
+    24543L, 35985L, 4293L, 24961L, 4317L, 79699L, 19869L, 28608L, 
+    38430L, 251515L, 7804L, 2102L, 136321L, 88784L, 5365L, 24521L, 
+    30577L, 44577L)), class = "data.frame", row.names = c(NA, 
+-40L))
+
+#plot
+ggplot(b_context[b_context$treatment == "Control",], aes(label, count, fill=Name))+
+  geom_bar(stat = "identity", position = "dodge", width = 0.5, alpha=1)+ 
+  coord_polar(clip =  "off")+
+  theme_minimal()+
+  labs(x=NULL,y=NULL, title = "Dynamic II N22 Flag leaf")+ 
+  theme(plot.title = element_text(hjust = 0.5, vjust = 1.5))+
+  theme(legend.text = element_text(face = "bold", size = 17),
+        legend.title = element_blank(), 
+        axis.text.y = element_blank(), 
+        panel.grid.major.y = element_line(color="lightblue", linetype = "dotted", size = 0.7), 
+        panel.grid.major.x = element_line(color="lightblue", size = 0.9), 
+        axis.text.x = element_text(face = "bold", size = 22),
+        legend.position = "bottom",
+        legend.direction = "horizontal")+
+  geom_text(aes(x=11, y=max(b_context[b_context$treatment == "Control", "count"]), 
+                label=max(b_context[b_context$treatment == "Control", "count"])),
+            angle = 12, size = 7.5, color="#4d4d4d")+
+  scale_fill_manual(values = c("#ff006f", "#808080", "#0099e6"))
