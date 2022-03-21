@@ -2,7 +2,7 @@
 library(ggplot2)
 library(ggpubr)
 
-#Expression profiles of some important genes in flag leaf of rice
+#Add significant value in the graph
 
 ggplot(exp_mc_ir64_all_cs2, aes(x=funcLabel, y = log_fpkm, fill = treatment))+
   stat_boxplot(geom = "errorbar")+
